@@ -1,44 +1,22 @@
 require 'csv'
+require_relative 'data'
 
 class DataService
 
   DATA_FOLDER = 'data'
   TIME_PATTERN = ''
 
-  def initialize (csv=CSV)
-    @csv = csv
+  def initialize (data_file_service=Data.new)
+    @data_file_service = data_file_service
   end
 
-  def get_times(stop_id, number_of_buses)
-
-    time = DateTime.new(2011,2,3,4,5,6,'+7')
-    stop_times.select { |row| row["stop_id"]==stop_id }.map { |row| Time.parse(row["arrival_time"]) }
-
-
-
-
+  def get_times(stop_id, number_of_buses, time)
+    times = @data_file_service.stop_times.select { |row| row['stop_id']==stop_id }.select { |row| time <= DateTime.strptime(row['arrival_time'],'%T')  }.map { |row| ResultItem.new(DateTime.strptime(row['arrival_time'], '%T'))}
+    times[0,number_of_buses]
   end
 
   def load_data
 
-
-
-  end
-
-  def stops
-    @csv.read('data/stops.txt', :headers=>:first_row)
-  end
-
-  def trips
-    @csv.read('data/trips.txt', :headers=>:first_row)
-  end
-
-  def routes
-    @csv.read('data/routes.txt', :headers=>:first_row)
-  end
-
-  def stop_times
-    @csv.read('data/stop_times.txt', :headers=>:first_row)
   end
 
 end
