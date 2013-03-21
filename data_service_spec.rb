@@ -2,14 +2,14 @@ require "rspec"
 require 'rspec/mocks'
 require_relative 'data_service'
 require_relative 'result_item'
-require_relative 'data'
+require_relative 'csv_data'
 
 describe "Data Service" do
 
   it 'should find appropriate stop times' do
 
     now = DateTime.strptime('06:28:00','%T')
-    fake_data = mock('Data')
+    fake_data = mock('CsvData')
     fake_data.stub(:stop_times).and_return([{'stop_id' => '42', 'arrival_time' => '05:38:00'},
                                      {'stop_id' => '42', 'arrival_time' => '06:28:00'},
                                      {'stop_id' => '42', 'arrival_time' => '06:38:00'},
