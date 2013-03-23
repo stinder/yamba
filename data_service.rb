@@ -1,19 +1,24 @@
-require 'csv'
-require_relative 'csv_data'
+require_relative 'result_item'
 
 class DataService
 
   DATA_FOLDER = 'data'
   TIME_PATTERN = ''
 
-  def initialize (data=CsvData.new)
-    @data = data
-    @stop_times = @data.stop_times
+  def get_times_from_db(stop_id, time_in_seconds)
+    time_range = time_in_seconds..time_in_seconds + minutes(45)
+    StopTime.where(:stop_id => stop_id, :departure_time => time_range).order(:departure_time)
+    #create_result_items(stop_times)[0,10]
   end
 
-  def get_times(stop_id, number_of_buses, time)
-    times = @stop_times.select { |row| row['stop_id']==stop_id }.select { |row| time <= DateTime.strptime(row['arrival_time'],'%T')  }.map { |row| ResultItem.new(DateTime.strptime(row['arrival_time'], '%T'))}
-    times[0,number_of_buses]
+  private
+
+  def minutes(n)
+    60 * n
+  end
+
+  def create_result_items(stop_times)
+    stop_times.map {|time| ResultItem.new(time) }
   end
 
 end

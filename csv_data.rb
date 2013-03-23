@@ -2,7 +2,8 @@ require 'csv'
 
 class CsvData
   def stops
-    CSV.read('data/stops.txt', :headers=>:first_row)
+    #CSV.read('data/stops.txt', :headers=>:first_row)
+    CSV.read('data/cornbrook_stops.txt', :headers=>:first_row)
   end
 
   def trips
@@ -14,7 +15,8 @@ class CsvData
   end
 
   def stop_times
-    CSV.read('data/stop_times.txt', :headers=>:first_row)
+    #CSV.read('data/stop_times.txt', :headers=>:first_row)
+    CSV.read('data/cornbrook_times.txt', :headers=>:first_row)
   end
 
 end

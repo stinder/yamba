@@ -1,0 +1,13 @@
+.container-fluid
+  .span10
+    %table.table.table-striped
+      %thead
+        %th Service
+        %th Departure time
+        %th Trip id
+      %tbody
+        - @items.each do |item|
+          %tr
+            %td= '255'
+            %td= item.time_string
+            %td= item.trip_id
