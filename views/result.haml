@@ -4,10 +4,10 @@
       %thead
         %th Service
         %th Departure time
-        %th Trip id
+        %th Route
       %tbody
         - @items.each do |item|
           %tr
-            %td= '255'
+            %td= item.trip.routes.first.route_short_name
             %td= item.time_string
-            %td= item.trip_id
+            %td= item.trip.routes.first.route_long_name

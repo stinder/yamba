@@ -14,15 +14,18 @@ describe 'The Yamba App' do
     Sinatra::Application
   end
 
-  xit "should access a database" do
+  it "should access a database" do
     Database::setup_db('db/cornbrook.db')
     StopTime.first.stop_id.should eq '1800SB30291'
-
   end
 
   xit "should load cornbrook data" do
     data_loader = DataLoader.new('db/cornbrook.db')
-    data_loader.create_schema
+    data_loader.load_data
+  end
+
+  xit "should load real data" do
+    data_loader = DataLoader.new('db/data.db')
     data_loader.load_data
   end
 
