@@ -14,7 +14,7 @@ describe 'The Yamba App' do
     Sinatra::Application
   end
 
-  it "should access a database" do
+  xit "should access a database" do
     Database::setup_db('db/cornbrook.db')
     StopTime.first.stop_id.should eq '1800SB30291'
   end
