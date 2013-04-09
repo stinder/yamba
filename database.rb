@@ -5,6 +5,8 @@ require 'sinatra/activerecord'
 require 'date'
 require_relative 'csv_data'
 
+#TODO: turn db methods into instance methods
+
 TIME_PATTERN = '%T'
 
 class BusStop < ActiveRecord::Base
@@ -44,11 +46,13 @@ end
 
 class Database
   def self.setup_db(path="db/data.db")
+    puts 'Setting ub database connection for ' + path
     ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :dbfile => path)
     set :database, "sqlite3:///#{path}"
   end
 
   def self.create_schema(path="db/data.db")
+    puts 'Creating schema for ' + path
     database = SQLite3::Database.open(path)
     database.execute "DROP TABLE IF EXISTS bus_stops"
     database.execute "DROP TABLE IF EXISTS stop_times"
@@ -60,6 +64,8 @@ class Database
     database.execute "CREATE TABLE trips(trip_id TEXT PRIMARY KEY,route_id TEXT, service_id TEXT, trip_headsign TEXT)"
     database.execute "CREATE TABLE routes(route_id TEXT PRIMARY KEY,agency_id TEXT, route_short_name TEXT, route_long_name TEXT, route_type TEXT)"
     database.execute "CREATE TABLE calendars(service_id TEXT PRIMARY KEY,monday TEXT, tuesday TEXT, wednesday TEXT, thursday TEXT, friday TEXT, saturday TEXT, sunday TEXT, start_date TEXT ,end_date TEXT)"
+    database.execute "CREATE INDEX stop_times_index ON stop_times (stop_id)"
+    database.execute "CREATE INDEX trips_index ON trips (trip_id)"
     database.close if database
   end
 

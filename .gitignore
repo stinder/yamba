@@ -1,5 +1,4 @@
 .idea
 Gemfile.lock
-db/test.db
-db/cornbrook.db
+db
 .rspec

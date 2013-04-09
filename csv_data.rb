@@ -22,9 +22,15 @@ class CsvData
     CSV.read(@folder + '/calendar.txt', :headers=>:first_row)
   end
 
-  def stop_times
-    CSV.read(@folder + '/stop_times.txt', :headers=>:first_row)
-    #CSV.read(@folder + '/cornbrook_times.txt', :headers=>:first_row)
+  def stop_times_fragment(suffix)
+    CSV.read(@folder + '/times-' + suffix, :headers=>:first_row, :row_sep => :auto)
   end
 
+  def stop_times
+    CSV.read(@folder + '/stop_times.txt', :headers=>:first_row)
+  end
+
+  def stop_times_file(filename)
+    CSV.read(@folder + '/' + filename, :headers=>:first_row)
+  end
 end
