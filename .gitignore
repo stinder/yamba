@@ -1,5 +1,4 @@
 .idea
-Gemfile.lock
 db
 .rspec
 zip/test.db.tar.gz
