@@ -1,8 +1,8 @@
 require 'rspec'
 require 'rspec/mocks'
-require_relative 'data_service'
-require_relative 'result_item'
-require_relative 'database'
+require_relative '../data_service'
+require_relative '../result_item'
+require_relative '../database'
 
 #TODO: have a look at the routes, use exceptions
 

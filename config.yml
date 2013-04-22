@@ -1,0 +1,6 @@
+development:
+  database : db/data.db
+  adapter : sqlite3
+production:
+  database : postgres://frdfcjbtqeerfg:nBTu8chSZaxSOv3Uzr7wxCcRJQ@ec2-54-225-84-29.compute-1.amazonaws.com:5432/d1kjbf3t8mlv54
+  adapter : postgres

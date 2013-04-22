@@ -46,7 +46,7 @@ end
 
 class Database
   def self.setup_db(path="db/data.db")
-    puts 'Setting ub database connection for ' + path
+    puts 'Setting up database connection for ' + path
     ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :dbfile => path)
     set :database, "sqlite3:///#{path}"
   end
