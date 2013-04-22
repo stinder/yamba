@@ -46,7 +46,7 @@ end
 
 class Database
   def self.setup_db(path="db/data.db")
-    puts 'Setting up database connection for ' + path
+    puts 'Setting ub database connection for ' + path
     ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :dbfile => path)
     set :database, "sqlite3:///#{path}"
   end
@@ -67,19 +67,6 @@ class Database
     database.execute "CREATE INDEX stop_times_index ON stop_times (stop_id)"
     database.execute "CREATE INDEX trips_index ON trips (trip_id)"
     database.close if database
-  end
-
-  def self.unzip_db(zip_file ='zip/test.db.tar.gz', destination = '/tmp/test.db', tar_reader=Gem::Package::TarReader, gzip_reader = Zlib::GzipReader)
-    if File.exists? (destination)
-      puts 'No need to unzip db - file exists already'
-      return
-    end
-    puts 'Unzipping db: ' + zip_file.to_s + ' => ' + destination.to_s
-    tar_reader.new(gzip_reader.open(zip_file)).each do |entry|
-      file = File.new(destination, 'w')
-      file.write(entry.read)
-      file.close
-    end
   end
 
 end
