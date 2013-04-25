@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rspec/mocks'
-require_relative 'data_loader'
+require_relative '../data_loader'
 
 describe "Data Loader" do
 
@@ -8,7 +8,7 @@ describe "Data Loader" do
     @fake_data = double(CsvData)
     path = 'db/test.db'
     Database::setup_db(path)
-    Database::create_schema(path)
+    DataLoader::create_schema(path)
     @loader = DataLoader.new(@fake_data)
   end
 
@@ -83,5 +83,16 @@ describe "Data Loader" do
     Trip.first.calendar.monday.should eq '1'
     Calendar.first.date_matches(DateTime.new(2013,3,27)).should be_true
     Calendar.first.date_matches(DateTime.new(2013,3,12)).should be_false
+  end
+
+  it "should recreate schema" do
+    path = 'db/test.db'
+    Database::setup_db(path)
+    DataLoader::create_schema(path)
+    BusStop.all.should eq []
+    StopTime.all.should eq []
+    Trip.all.should eq []
+    Route.all.should eq []
+    Calendar.all.should eq []
   end
 end

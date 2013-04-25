@@ -1,3 +1,5 @@
+require_relative 'database'
+
 class DataService
 
   def get_times_from_db(stop_id, time_in_seconds, today)

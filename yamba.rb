@@ -1,9 +1,9 @@
 require 'sinatra'
 require 'sinatra/base'
-require 'sinatra/config_file'
+require 'active_record'
+require 'sinatra/activerecord'
 require 'rubygems'
 require 'haml'
-require_relative 'database'
 require_relative 'data_service'
 require 'pg'
 require 'open-uri'
@@ -12,11 +12,11 @@ require 'uri'
 
 class Yamba < Sinatra::Base
 
-  register Sinatra::ConfigFile
-  config_file 'config.yml'
-
   configure :development do
-    Database::setup_db(settings.database)
+    #require 'sqlite3'
+    puts 'Setting up database connection for ' + 'db/data.db'
+    Database::setup_db
+    puts '..done'
   end
 
   configure :production do

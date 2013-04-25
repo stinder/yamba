@@ -2,8 +2,8 @@ require './yamba'
 require 'rspec'
 require 'rack/test'
 require 'rspec/mocks'
-require_relative 'database'
-require_relative 'data_loader'
+require_relative '../database'
+require_relative '../data_loader'
 
 set :environment, :test
 

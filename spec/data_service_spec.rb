@@ -3,6 +3,7 @@ require 'rspec/mocks'
 require_relative '../data_service'
 require_relative '../result_item'
 require_relative '../database'
+require_relative '../data_loader'
 
 #TODO: have a look at the routes, use exceptions
 
@@ -11,7 +12,7 @@ describe "Data Service" do
   before(:each) do
     db_path = 'db/test.db'
     Database::setup_db(db_path)
-    Database::create_schema(db_path)
+    DataLoader::create_schema(db_path)
     ActiveRecord::Base.logger = nil
     @data_service = DataService.new
   end

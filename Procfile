@@ -1,1 +1,1 @@
-web: bundle exec rackup config.ru -e production
+web: bundle exec rackup config.ru -E production
