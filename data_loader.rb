@@ -15,6 +15,9 @@ require_relative 'database'
 
 class DataLoader
 
+  SECONDS_OF_DAY =  86400
+  SECONDS_OF_HOUR =  86400
+
   def initialize(csv_data=CsvData.new, invalid_csv=STDOUT)
     @csv_data = csv_data
     @logger = ActiveRecord::Base.logger
@@ -52,9 +55,9 @@ class DataLoader
   end
 
   def load_stop_times
-    print_log_message("Start loading stop_times")
+    print_log_message('Start loading stop_times')
     load_stop_times_fragment(@csv_data.stop_times)
-    print_log_message("Stop times loaded successfully")
+    print_log_message('Stop times loaded successfully')
   end
 
   def load_stop_times_in_fragments(suffixes)
@@ -69,13 +72,26 @@ class DataLoader
   def load_stop_times_fragment(fragment)
     fragment.each_with_index do |time, index|
       print_progress(index)
-      begin
-        departure_time = DateTime.strptime(time['departure_time'], '%T').seconds_since_midnight
-        StopTime.create(:trip_id => time['trip_id'], :arrival_time => time['arrival_time'], :departure_time => departure_time, :stop_id => time['stop_id'], :stop_sequence => time['stop_sequence'])
-      rescue
-        @invalid_csv.puts(time)
-      end
+      departure_time = get_seconds_since_midnight(time['departure_time'])
+      StopTime.create(:trip_id => time['trip_id'], :arrival_time => time['arrival_time'], :departure_time => departure_time, :stop_id => time['stop_id'], :stop_sequence => time['stop_sequence'])
     end
+  end
+
+  def get_seconds_since_midnight(time_string)
+    hours = get_hours(time_string)
+    if hours>=24
+      get_seconds(time_string.gsub(/^#{hours}/, '00')) + (hours * 3600)
+    else
+      get_seconds(time_string)
+    end
+  end
+
+  def get_hours(time_string)
+    time_string[0,2].to_i
+  end
+
+  def get_seconds(time)
+    DateTime.strptime(time, '%T').seconds_since_midnight
   end
 
   def load_trips
@@ -119,18 +135,18 @@ class DataLoader
   def self.create_schema(path="db/data.db")
     puts 'Creating schema for ' + path
     database = SQLite3::Database.open(path)
-    database.execute "DROP TABLE IF EXISTS bus_stops"
-    database.execute "DROP TABLE IF EXISTS stop_times"
-    database.execute "DROP TABLE IF EXISTS trips"
-    database.execute "DROP TABLE IF EXISTS routes"
-    database.execute "DROP TABLE IF EXISTS calendars"
-    database.execute "CREATE TABLE bus_stops(stop_id TEXT PRIMARY KEY,  stop_code TEXT, stop_name TEXT, stop_lat NUMBER, stop_lon NUMBER)"
-    database.execute "CREATE TABLE stop_times(trip_id TEXT, arrival_time TEXT, departure_time NUMBER, stop_id TEXT, stop_sequence TEXT)"
-    database.execute "CREATE TABLE trips(trip_id TEXT PRIMARY KEY,route_id TEXT, service_id TEXT, trip_headsign TEXT)"
-    database.execute "CREATE TABLE routes(route_id TEXT PRIMARY KEY,agency_id TEXT, route_short_name TEXT, route_long_name TEXT, route_type TEXT)"
-    database.execute "CREATE TABLE calendars(service_id TEXT PRIMARY KEY,monday TEXT, tuesday TEXT, wednesday TEXT, thursday TEXT, friday TEXT, saturday TEXT, sunday TEXT, start_date TEXT ,end_date TEXT)"
-    database.execute "CREATE INDEX stop_times_index ON stop_times (stop_id)"
-    database.execute "CREATE INDEX trips_index ON trips (trip_id)"
+    database.execute 'DROP TABLE IF EXISTS bus_stops'
+    database.execute 'DROP TABLE IF EXISTS stop_times'
+    database.execute 'DROP TABLE IF EXISTS trips'
+    database.execute 'DROP TABLE IF EXISTS routes'
+    database.execute 'DROP TABLE IF EXISTS calendars'
+    database.execute 'CREATE TABLE bus_stops(stop_id TEXT PRIMARY KEY,  stop_code TEXT, stop_name TEXT, stop_lat NUMBER, stop_lon NUMBER)'
+    database.execute 'CREATE TABLE stop_times(trip_id TEXT, arrival_time TEXT, departure_time NUMBER, stop_id TEXT, stop_sequence TEXT)'
+    database.execute 'CREATE TABLE trips(trip_id TEXT PRIMARY KEY,route_id TEXT, service_id TEXT, trip_headsign TEXT)'
+    database.execute 'CREATE TABLE routes(route_id TEXT PRIMARY KEY,agency_id TEXT, route_short_name TEXT, route_long_name TEXT, route_type TEXT)'
+    database.execute 'CREATE TABLE calendars(service_id TEXT PRIMARY KEY,monday TEXT, tuesday TEXT, wednesday TEXT, thursday TEXT, friday TEXT, saturday TEXT, sunday TEXT, start_date TEXT ,end_date TEXT)'
+    database.execute 'CREATE INDEX stop_times_index ON stop_times (stop_id)'
+    database.execute 'CREATE INDEX trips_index ON trips (trip_id)'
     database.close if database
   end
 

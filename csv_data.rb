@@ -31,6 +31,6 @@ class CsvData
   end
 
   def stop_times_file(filename)
-    CSV.read(@folder + '/' + filename, :headers=>:first_row)
+    CSV.read(filename, :headers=>:first_row)
   end
 end
