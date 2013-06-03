@@ -9,9 +9,12 @@ require 'pg'
 require 'open-uri'
 require 'uri'
 require_relative 'lookup_service'
+require 'tzinfo'
 
 
 class Yamba < Sinatra::Base
+
+  $timezone = TZInfo::Timezone.get('Europe/London')
 
   configure :development do
     puts 'Setting up database connection for ' + 'db/data.db'
@@ -33,7 +36,7 @@ class Yamba < Sinatra::Base
   end
 
   get '/times/:stop_id/now' do |stop_id|
-    now = DateTime.now
+    now = $timezone.now
     seconds_since_midnight = now.seconds_since_midnight
     data_service = DataService.new
     @items = data_service.get_times_from_db(stop_id, seconds_since_midnight, now)

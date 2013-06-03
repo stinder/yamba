@@ -74,4 +74,5 @@ DEPENDENCIES
   sinatra-activerecord
   sinatra-config-file
   sqlite3
+  tzinfo
   unicorn

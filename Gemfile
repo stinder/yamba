@@ -6,6 +6,7 @@ gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'sinatra-config-file'
 gem 'haml'
+gem 'tzinfo'
 
 group :test do
   gem 'sqlite3'
