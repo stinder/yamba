@@ -1,0 +1,10 @@
+%div.container-fluid
+  %div.span6
+    %table.table.table-striped
+      %thead
+        %th Stops nearby the postcode you entered
+      %tbody
+        - @bus_stops.each do |stop|
+          %tr
+            %td
+              %a{:href => "/times/#{stop.stop_id}/now"} #{stop.stop_name}

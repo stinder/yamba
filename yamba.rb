@@ -8,6 +8,7 @@ require_relative 'data_service'
 require 'pg'
 require 'open-uri'
 require 'uri'
+require_relative 'lookup_service'
 
 
 class Yamba < Sinatra::Base
@@ -41,6 +42,21 @@ class Yamba < Sinatra::Base
 
   get '/' do
     haml :home
+  end
+
+  def lookup_service
+    LookupService.new
+  end
+
+  get '/lookup' do
+    radius = params[:radius] || 1.2
+    @bus_stops = lookup_service.lookup_locations(params[:postcode], radius)
+    haml :locations
+  end
+
+  get '/lookup/:postcode' do |postcode|
+    @bus_stops = lookup_service.lookup_locations(postcode)
+    haml :locations
   end
 
 end

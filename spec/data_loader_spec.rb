@@ -26,7 +26,6 @@ describe 'Data Loader' do
 
   it 'should load stop times into db' do
     @fake_data.stub(:stop_times).and_return([
-        {'trip_id' => 7, 'arrival_time' => '05:38:00', 'departure_time' => '05:38:XX', 'stop_id' => '1800SB04721', 'stop_sequence' => '0', 'pickup_type' => '0', 'drop_off_type' => '1'},
         {'trip_id' => 0, 'arrival_time' => '05:38:00', 'departure_time' => '05:38:00', 'stop_id' => '1800SB04791', 'stop_sequence' => '1', 'pickup_type' => '0', 'drop_off_type' => '0'},
         {'trip_id' => 0, 'arrival_time' => '05:38:00', 'departure_time' => '05:38:00', 'stop_id' => '1800SB04791', 'stop_sequence' => '1', 'pickup_type' => '0', 'drop_off_type' => '0'},
         {'trip_id' => 1, 'arrival_time' => '05:39:00', 'departure_time' => '07:18:20', 'stop_id' => '1800SB04961', 'stop_sequence' => '2', 'pickup_type' => '0', 'drop_off_type' => '0'}

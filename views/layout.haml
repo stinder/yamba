@@ -1,19 +1,19 @@
 !!!
-%html{:lang => "en"}
+%html{:lang => 'en'}
   %head
     %title YAMBA
     %link(rel="stylesheet" href="/css/styles.css")
     %link(rel="stylesheet" href="/css/bootstrap-responsive.css")
     %link(rel="stylesheet" href="/css/bootstrap.css")
     %link(rel="stylesheet" href="/css/bootstrap-responsive.min.css")
-    -#%script{:type => "text/JavaScript", :src => "/js/bootstrap.js"}
-    -#%script{:type => "text/JavaScript", :src => "/js/bootstrap.min.js"}
   %body
-    .navbar
-      .navbar-inner
+    %div.navbar
+      %div.navbar-inner
         %ul.nav
           %li
-            %a{:href => "/times/1800SB30291/now"} Cornbrook (Stop A)
+            %a{:href => '/'} Home
           %li
-            %a{:href => "/times/1800SB45141/now"} Piccadilly Gardens (Stop L)
+            %a{:href => '/times/1800SB30291/now'} Cornbrook (Stop A)
+          %li
+            %a{:href => '/times/1800SB45141/now'} Piccadilly Gardens (Stop L)
     =yield
