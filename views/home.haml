@@ -1,8 +1,16 @@
 %div.container-fluid.home
   %div.row-fluid
-    %div.span4 Welcome to yamba, Yet Another Manchester Bus-times Application. Everyone should have one!
+    %div.span6
+      %h1 YAMBA - Yet Another Manchester Bus-times Application
   %div.row-fluid
-    %div.span8
-      %form.input-append{ :action => '/lookup', :method => 'get'}
-        %input.span6{:type => 'text', :name => 'postcode', :class => 'text', :value => ''}
-        %input.btn{:type => 'submit', :value => 'Search bus stops by postcode'}
+    %div.span6
+      %table.table.table-striped
+        %thead
+          %th Recent bus stops
+        %tbody
+          - @recent_stops.each do |stop|
+            %tr
+              %td
+                %a{:href => "/times/#{stop.stop_id}/now"} #{stop.stop_name}
+              %td
+                %a{:href => "/remove/#{stop.stop_id}"} x

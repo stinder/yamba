@@ -1,3 +1,15 @@
 .home .row-fluid {
     margin-bottom: 2em;
 }
+
+.home h1 {
+    font-size: 120%
+}
+
+.search {
+    padding: 0.5em;
+}
+
+.yamba form {
+    margin-bottom: 0px;
+}

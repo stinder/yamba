@@ -6,14 +6,20 @@
     %link(rel="stylesheet" href="/css/bootstrap-responsive.css")
     %link(rel="stylesheet" href="/css/bootstrap.css")
     %link(rel="stylesheet" href="/css/bootstrap-responsive.min.css")
-  %body
+  %body.yamba
     %div.navbar
       %div.navbar-inner
         %ul.nav
           %li
-            %a{:href => '/'} Home
+            %a{:href => '/'} YAMBA
           %li
-            %a{:href => '/times/1800SB30291/now'} Cornbrook (Stop A)
-          %li
-            %a{:href => '/times/1800SB45141/now'} Piccadilly Gardens (Stop L)
+            %a{:href => '/'} Help
+        %form.search.pull-left{ :action => '/lookup', :method => 'get'}
+          %div.input-append
+            %input{:type => 'text', :name => 'postcode', :class => 'text', :value => ''}
+            %input.btn{:type => 'submit', :value => 'Search bus stops by postcode'}
+          -#%li
+          -#  %a{:href => '/times/1800SB30291/now'} Cornbrook (Stop A)
+          -#%li
+          -#  %a{:href => '/times/1800SB45141/now'} Piccadilly Gardens (Stop L)
     =yield
