@@ -2,7 +2,7 @@
 %html{:lang => 'en'}
   %head
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    %title YAMBA
+    %title YAMBA - Yet Another Manchester Bus-times Application
     %link(rel="stylesheet" href="/css/styles.css")
     %link(rel="stylesheet" href="/css/bootstrap-responsive.css")
     %link(rel="stylesheet" href="/css/bootstrap.css")
@@ -13,14 +13,4 @@
         %ul.nav
           %li
             %a{:href => '/'} YAMBA
-          %li
-            %a{:href => '/'} Help
-        %form.search.pull-left{ :action => '/lookup', :method => 'get'}
-          %div.input-append
-            %input{:type => 'text', :name => 'postcode', :class => 'text', :value => ''}
-            %input.btn{:type => 'submit', :value => 'Search bus stops by postcode'}
-          -#%li
-          -#  %a{:href => '/times/1800SB30291/now'} Cornbrook (Stop A)
-          -#%li
-          -#  %a{:href => '/times/1800SB45141/now'} Piccadilly Gardens (Stop L)
     =yield

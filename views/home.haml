@@ -1,12 +1,12 @@
 %div.container-fluid.home
   %div.row-fluid
-    %div.span6
-      %h1 YAMBA - Yet Another Manchester Bus-times Application
+    %form.search.pull-left{ :action => '/lookup', :method => 'get'}
+      %div.input-append
+        %input{:type => 'text', :name => 'postcode', :class => 'text', :value => ''}
+        %input.btn{:type => 'submit', :value => 'Search'}
   %div.row-fluid
     %div.span6
       %table.table.table-striped
-        %thead
-          %th Recent bus stops
         %tbody
           - @recent_stops.each do |stop|
             %tr
